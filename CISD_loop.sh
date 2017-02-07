@@ -14,7 +14,10 @@ dir_out2=$4;
 dir_code=$(cd `dirname $0`; pwd);
 mkdir -p $dir_out2/tmp2/;
 echo "running CISD_loop......"
-for i in ${chr_list//,/ } ; do awk '{print $1"_"$2"\t"$3}' ${dir_hic_reads}/chr${i}_5kb.RAWobserved > $dir_out2/tmp2/chr${i}_5kb.RAWobserved.dict; echo chr$i; bash ${dir_code}/pipeline_loop_single_chr.sh ${dir_code} $dir_cisd_site/high_score_peaks/hspeaks0.50_pred2/pred2chr${i}.merge  ${dir_hic_reads}/chr${i}_5kb.RAWexpected  $dir_out2/tmp2/chr${i}_5kb.RAWobserved.dict  ${dir_code}/data/domain.bed   ${dir_out2} chr${i};done;
+#for i in ${chr_list//,/ } ; do awk '{print $1"_"$2"\t"$3}' ${dir_hic_reads}/chr${i}_5kb.RAWobserved > $dir_out2/tmp2/chr${i}_5kb.RAWobserved.dict; echo chr$i; bash ${dir_code}/pipeline_loop_single_chr.sh ${dir_code} $dir_cisd_site/high_score_peaks/hspeaks0.50_pred2/pred2chr${i}.merge  ${dir_hic_reads}/chr${i}_5kb.RAWexpected  $dir_out2/tmp2/chr${i}_5kb.RAWobserved.dict  ${dir_code}/data/domain.bed   ${dir_out2} chr${i};done;
+
+
+for i in ${chr_list//,/ } ; do grep -w chr$i $dir_cisd_site/CISD_site.txt > $dir_cisd_site/tmp.txt ; awk '{print $1"_"$2"\t"$3}' ${dir_hic_reads}/chr${i}_5kb.RAWobserved > $dir_out2/tmp2/chr${i}_5kb.RAWobserved.dict; echo chr$i; bash ${dir_code}/pipeline_loop_single_chr.sh ${dir_code} $dir_cisd_site/tmp.txt  ${dir_hic_reads}/chr${i}_5kb.RAWexpected  $dir_out2/tmp2/chr${i}_5kb.RAWobserved.dict  ${dir_code}/data/domain.bed   ${dir_out2} chr${i};done;
 
 cat $dir_out2/candidate_by_chr/candidate.bed_chr* | sort -k1.4n,1 -k2n,2 | uniq > $dir_out2/candidate.bed_chrAll;
 
