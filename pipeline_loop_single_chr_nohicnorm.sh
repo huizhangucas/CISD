@@ -16,7 +16,7 @@ file_loop_withindomain=$dir_work/tmp_loop_withindomain_$chr
 file_loop_withindomain_withreads=$dir_work/candidate_by_chr/candidate.bed_${chr}.withreads
 
 
-bash $dir_code/hicnorm2.sh $dir_hic_reads $chr
+#bash ~/project1/CISD-master/hicnorm2.sh $dir_hic_reads $chr
 
 
 
